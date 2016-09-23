@@ -19,10 +19,13 @@ def run_class(params):
             f.write(i+" = " + str(params[i]) + "\n")
     for i in defaults.keys():
         f.write(i+" = " + str(defaults[i]) + "\n") 
-    command = path_to_class+"class " + temp_file_name
-    print command
+    command = path_to_class+"class " + temp_file_name + " >! class.log"
+  #  print command
     f.close()
     os.system(command)
-    data = np.genfromtxt("./output/"+temp_file_name[:-4]+"00_cl.dat")
-    os.system("rm ./output/"+temp_file_name[:-4]+"00_cl.dat")
+    try:
+        data = np.genfromtxt("./output/"+temp_file_name[:-4]+"00_cl.dat")
+        os.system("rm ./output/"+temp_file_name[:-4]+"00_cl.dat")
+    except:
+            raise NameError("Error in class, check class.log file")
     return data
